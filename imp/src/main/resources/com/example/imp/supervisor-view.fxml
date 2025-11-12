@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.imp.supervisorViewGUI">
+   <children>
+      <Text layoutX="195.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supervisor Vacation" underline="true">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="vacationRequestsTextarea" editable="false" layoutX="195.0" layoutY="128.0" prefHeight="92.0" prefWidth="225.0" promptText="sample" />
+      <Button fx:id="buttonApproveVacation" layoutX="469.0" layoutY="161.0" mnemonicParsing="false" onAction="#onApproveVacation" text="Approve" />
+      <Button fx:id="buttonRejectVacation" layoutX="476.0" layoutY="286.0" mnemonicParsing="false" onAction="#onRejectVacation" text="Reject" />
+      <TextField fx:id="vacationRejectionTextfield" layoutX="195.0" layoutY="252.0" prefHeight="92.0" prefWidth="225.0" promptText="sample" />
+      <Text layoutX="95.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please state a reason for the rejection along with the exact vacation request date" />
+      <Button fx:id="logoutButton" layoutX="534.0" layoutY="362.0" mnemonicParsing="false" onAction="#onLogoutButton" text="Logout" />
+      <Label fx:id="newAlertLabel" layoutX="51.0" layoutY="83.0" text="New Alert: " textFill="#0474bf">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
