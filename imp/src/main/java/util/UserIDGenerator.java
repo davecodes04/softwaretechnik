@@ -15,6 +15,7 @@ public class UserIDGenerator {
         currentIds.put("CEO", 1);
     }
 
+    // Generate next id that isn't taken
     public static synchronized int getNextId(String role) {
         role = role.toUpperCase();
         int nextId = currentIds.getOrDefault(role, 1000); // fallback for unknown roles

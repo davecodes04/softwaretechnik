@@ -1,4 +1,4 @@
-package com.example.imp;
+package main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,11 +68,12 @@ public class supervisorViewGUI extends mainGUI {
         requestIterator = pendingRequests.iterator();
     }
 
-    // Is called
+    // Is called to show the next employee and his request
     private void showNextRequest() {
         vacationRequestsTextarea.clear();
         vacationRejectionTextfield.clear();
 
+        // Checks if there are still more employees "in line"
         if (requestIterator != null && requestIterator.hasNext()) {
             currentEmployee = requestIterator.next();
             vacationRequestsTextarea.setText(
@@ -81,16 +82,20 @@ public class supervisorViewGUI extends mainGUI {
             );
         } else {
             currentEmployee = null;
-            vacationRequestsTextarea.setText("No more vacation requests.");
+            vacationRequestsTextarea.clear();
             newAlertLabel.setText("All requests handled.");
         }
     }
 
+    // Is called when the 'approve' button gets clicked
     @FXML
     protected void onApproveVacation(ActionEvent actionEvent) {
         if (currentEmployee != null) {
+            // The vacation request is copied into the local variable
             String request = currentEmployee.getVacationRequest();
+            // The vacation request gets added into approved vacations
             currentEmployee.setApprovedVacations(request);
+            // The vacation request gets deleted
             currentEmployee.cancelVacationRequest();
 
             newAlertLabel.setText("Approved vacation for: " + currentEmployee.getEmail());
@@ -100,20 +105,26 @@ public class supervisorViewGUI extends mainGUI {
         }
     }
 
+    // Is called when the 'reject' button gets clicked
     @FXML
     protected void onRejectVacation(ActionEvent actionEvent) {
         if (currentEmployee != null) {
             String reason = vacationRejectionTextfield.getText();
+            // If the supervisor doesn't write in a reason for the rejection, then nothing happens
             if (reason == null || reason.isEmpty()) {
                 newAlertLabel.setText("Please enter a reason for rejection.");
                 return;
             }
-
+            // Get the vacation request from the current employee
             String request = currentEmployee.getVacationRequest();
+            // The vacation request is set as rejected
             currentEmployee.setRejectedVacation(request);
+            // The rejection reason is passed over to the employee
             currentEmployee.setMessage(reason);
+            // The vacation request is canceled
             currentEmployee.cancelVacationRequest();
 
+            // Rejection is displayed for the current employee, and then it displays the next request in line
             newAlertLabel.setText("Rejected vacation for: " + currentEmployee.getEmail());
             showNextRequest();
         } else {
@@ -121,11 +132,13 @@ public class supervisorViewGUI extends mainGUI {
         }
     }
 
+    // Switch back to the main GUI view (login page)
     @FXML
     protected void switchToMain() throws IOException {
         HelloApplication.setRoot("main-page");
     }
 
+    // Is called when logout gets clicked
     @FXML
     protected void onLogoutButton(ActionEvent actionEvent) throws IOException {
         switchToMain();

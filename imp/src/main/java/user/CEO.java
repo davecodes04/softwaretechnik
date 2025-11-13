@@ -1,6 +1,6 @@
 package user;
 
-import com.example.imp.mainGUI;
+import main.mainGUI;
 import util.UserIDGenerator;
 
 public class CEO extends Employee{

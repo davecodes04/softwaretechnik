@@ -1,4 +1,4 @@
-package com.example.imp;
+package main;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;

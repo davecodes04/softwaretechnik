@@ -1,8 +1,7 @@
 package util;
 
-import com.example.imp.employeeViewGUI;
-import com.example.imp.supervisorViewGUI;
-import user.Supervisor;
+import main.employeeViewGUI;
+import main.supervisorViewGUI;
 
 import java.util.ArrayList;
 import java.util.List;

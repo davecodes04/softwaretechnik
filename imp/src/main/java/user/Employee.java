@@ -1,6 +1,6 @@
 package user;
 
-import com.example.imp.mainGUI;
+import main.mainGUI;
 import util.UserIDGenerator;
 
 import java.util.ArrayList;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public class Employee extends User{
 
     protected Department department;
-    protected String pendingVacation;
-    protected String approvedVacation;
-    protected String rejectedVacation;
-    protected ArrayList<String> allVacations = new ArrayList<>();
+    protected String pendingVacation; // the request that is currently pending
+    protected String approvedVacation; // a request that has been approved by the supervisor
+    protected String rejectedVacation; // a rejected request
+    protected ArrayList<String> allVacations = new ArrayList<>(); // all approved vacations
     protected int vacationDaysLeft = 30;
     protected String message;
     protected mainGUI myGUI;
@@ -60,14 +60,9 @@ public class Employee extends User{
         allVacations.add(vacation);
     }
 
-    public String getRejectedVacation() {
-        return rejectedVacation;
-    }
+    public String getRejectedVacation() { return rejectedVacation; }
 
-    public void setRejectedVacation(String rejectedVacation) {
-        this.rejectedVacation = rejectedVacation;
-    }
-
+    public void setRejectedVacation(String rejectedVacation) { this.rejectedVacation = rejectedVacation; }
 
     public void bookFlexLeave(){
     }

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="430.0" prefWidth="347.0" spacing="20.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.imp.mainGUI">
+<VBox alignment="CENTER" prefHeight="430.0" prefWidth="347.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainGUI">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -18,7 +18,7 @@
          <Font name="System Bold" size="18.0" />
       </font>
    </Text>
-   <TextField fx:id="textEmail" maxWidth="150.0" promptText="E-Mail" text="test">
+   <TextField fx:id="textEmail" maxWidth="150.0" promptText="E-Mail" text="test@gmail.com">
       <VBox.margin>
          <Insets />
       </VBox.margin>
