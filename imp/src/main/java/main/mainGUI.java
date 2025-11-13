@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import user.*;
 
 import java.io.IOException;
@@ -13,6 +14,8 @@ public class mainGUI {
     protected Supervisor supervisor = new Supervisor();
     protected HR hr = new HR();
     protected CEO ceo = new CEO();
+    @FXML
+    protected Text alertText;
     @FXML
     protected TextField textEmail;
     @FXML
@@ -42,6 +45,7 @@ public class mainGUI {
     // Method that is called when the login button is clicked
     @FXML
     protected void onLoginButton() throws IOException {
+        alertText.setText("");
         String email = textEmail.getText();
         String password = textPassword.getText();
         String role = menu.getText();
@@ -66,7 +70,8 @@ public class mainGUI {
 
                 // Case 3: E-Mail exists, but it's reserved by another user with a different role
             } else {
-                System.err.println("This E-Mail is not registered for an Employee");
+                //System.err.println("This E-Mail is not registered for an Employee");
+                alertText.setText("This E-Mail is already taken! Try again with a different one.");
                 return;
             }
             employeeToLogin.login();
@@ -89,7 +94,7 @@ public class mainGUI {
 
                 // Case 3: E-Mail exists, but it's reserved by another user with a different role
             } else {
-                System.err.println("This E-Mail is not registered for a Supervisor.");
+                alertText.setText("This E-Mail is already taken! Try again with a different one.");
                 return;
             }
             supervisorToLogin.login();

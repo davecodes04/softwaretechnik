@@ -55,5 +55,18 @@ public class Date {
         }
     }
 
+    // Checks if the correct date format was upheld
+    public boolean checkDateFormatting(String date){
+        // The expected format is strictly two digits for the day, a dot, and two digits for the month.
+        // Example of valid input: "05.11" or "31.12"
+        String regex = "^\\d{2}\\.\\d{2}$";
+
+        // Compile the pattern
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(date);
+
+        // Return true if the date matches the format, false otherwise
+        return matcher.matches();
+    }
 
 }

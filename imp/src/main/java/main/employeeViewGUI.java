@@ -12,9 +12,11 @@ import java.io.IOException;
 public class employeeViewGUI extends mainGUI{
     Employee employee = (Employee) UserSession.getCurrentUser();
     Date date = new Date();
-    String dateString;
+    String fromDate, toDate, dateString;
     @FXML
     private Text emailText;
+    @FXML
+    protected Text alertText;
     @FXML
     private Button sendVacationRequestButton;
     @FXML
@@ -28,7 +30,7 @@ public class employeeViewGUI extends mainGUI{
     @FXML
     private TextField vacationUntilField;
     @FXML
-    private Text avaliableVacationDaysText;
+    private Text availableVacationDaysText;
     @FXML
     private Label vacationRequestPending;
     @FXML
@@ -44,10 +46,11 @@ public class employeeViewGUI extends mainGUI{
 
     // Gets called by initialize
     private void loadApprovedVacations() {
+        alertText.setText("");
         // Checks ff an approved vacation exists
         if(employee.getLastApprovedVacation() != null && !employee.getLastApprovedVacation().isEmpty()) {
             // Message for the employee that their request has been approved
-            vacationRequestPending.setText("Status: Your vacation request for: " + employee.getLastApprovedVacation() + "\n" + " was approved!");
+            vacationRequestPending.setText("Your vacation request for: " + employee.getLastApprovedVacation() + "\n" + " was approved!");
 
             // We use a method in Date to calculate the amount of days between two dates
             int days = date.calculateDaysBetween(employee.getLastApprovedVacation());
@@ -56,7 +59,7 @@ public class employeeViewGUI extends mainGUI{
             employee.setVacationDaysLeft(vacationDays - days);
 
             // Their new amount of vacation days left gets displayed
-            avaliableVacationDaysText.setText(String.valueOf(employee.getVacationDaysLeft()));
+            availableVacationDaysText.setText(String.valueOf(employee.getVacationDaysLeft()));
             vacationOptionMenuItem.setText("empty");
 
             // The approved vacation is now processed and gets added to their vacation list
@@ -90,18 +93,31 @@ public class employeeViewGUI extends mainGUI{
     protected void onSendVacationRequest(ActionEvent actionEvent) {
         // Checks if there is an unprocessed request already
         if(employee.getVacationRequest() == null){
-            // We add the text from both text fields into one variable with a '-' in between
-            dateString = vacationFromField.getText();
-            dateString += " - " + vacationUntilField.getText();
+            fromDate = vacationFromField.getText();
+            toDate = vacationUntilField.getText();
+            // Checks if the employee typed in the dates in the correct format using an outside method from Date
+            if(date.checkDateFormatting(fromDate) && date.checkDateFormatting(toDate)){
+                // We add the text from both text fields into one variable with a '-' in between
+                dateString = fromDate + " - " + toDate;
 
-            // Status is updated for current request
-            vacationRequestPending.setText("Status: Request pending for: " + dateString);
-            vacationOptionMenuItem.setText(dateString);
+                // Checks if the employee has enough vacation days for this particular request
+                if(date.calculateDaysBetween(dateString) > employee.getVacationDaysLeft()){
+                    alertText.setText("You don't have enough vacation days left " + "\n" + "for that request!");
+                    return;
+                }
 
-            // Request vacation gets added
-            employee.addRequestVacation(dateString);
+                // Status is updated for current request
+                vacationRequestPending.setText("Status: Request pending for: " + dateString);
+                vacationOptionMenuItem.setText(dateString);
+
+                // Request vacation gets added
+                employee.addRequestVacation(dateString);
+                alertText.setText("");
+            }else{
+                alertText.setText("Incorrect format for the dates!" + "\n" + "'dd.mm' format expected");
+            }
         }else{
-            System.err.println("Can't make a new request before the last one has been processed!");
+            alertText.setText("Can't make a new request before " + "\n" + "the last one has been processed!");
         }
     }
 
