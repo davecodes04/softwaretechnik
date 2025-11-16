@@ -97,6 +97,12 @@ public class supervisorViewGUI extends mainGUI {
             currentEmployee.setApprovedVacations(request);
             // The vacation request gets deleted
             currentEmployee.cancelVacationRequest();
+            // The approved vacation gets added into the list of all vacations
+            currentEmployee.addVacation(request);
+            // We use a method in Date to calculate the amount of days between two dates
+            int days = date.calculateDaysBetween(request);
+            // The total amount of their vacation days gets calculated
+            currentEmployee.setVacationDaysLeft(currentEmployee.getVacationDaysLeft() - days);
 
             newAlertLabel.setText("Approved vacation for: " + currentEmployee.getEmail());
             showNextRequest();

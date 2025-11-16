@@ -70,7 +70,6 @@ public class mainGUI {
 
                 // Case 3: E-Mail exists, but it's reserved by another user with a different role
             } else {
-                //System.err.println("This E-Mail is not registered for an Employee");
                 alertText.setText("This E-Mail is already taken! Try again with a different one.");
                 return;
             }

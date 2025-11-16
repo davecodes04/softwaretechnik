@@ -47,34 +47,37 @@ public class employeeViewGUI extends mainGUI{
     // Gets called by initialize
     private void loadApprovedVacations() {
         alertText.setText("");
-        // Checks ff an approved vacation exists
-        if(employee.getLastApprovedVacation() != null && !employee.getLastApprovedVacation().isEmpty()) {
+        allVacationsTextarea.clear();
+        // Checks if an approved vacation exists
+        if(employee.getLastApprovedVacation() != null) {
             // Message for the employee that their request has been approved
-            vacationRequestPending.setText("Your vacation request for: " + employee.getLastApprovedVacation() + "\n" + " was approved!");
-
-            // We use a method in Date to calculate the amount of days between two dates
-            int days = date.calculateDaysBetween(employee.getLastApprovedVacation());
-            int vacationDays = employee.getVacationDaysLeft();
-            // The total amount of their vacation days gets calculated
-            employee.setVacationDaysLeft(vacationDays - days);
-
-            // Their new amount of vacation days left gets displayed
-            availableVacationDaysText.setText(String.valueOf(employee.getVacationDaysLeft()));
-            vacationOptionMenuItem.setText("empty");
-
-            // The approved vacation is now processed and gets added to their vacation list
-            employee.addVacation(employee.getLastApprovedVacation());
-            // Loops through all approved vacations and appends them to the Textarea
-            for(int i = 1; i < employee.getAllVacations().size()+1; i++){
-                allVacationsTextarea.appendText(i + ": " + employee.getAllVacations().get(i-1) + "\n");
-            }
+            vacationRequestPending.setText(
+                    "Your vacation request for: "
+                            + employee.getLastApprovedVacation()
+                            + "\n" +" was approved!"
+            );
+            // Delete the request after it has been processed
+            employee.cancelVacationRequest();
             employee.setApprovedVacations(null);
         }
+
         // Checks if there is a rejected vacation request
-        if(employee.getRejectedVacation() != null && !employee.getRejectedVacation().isEmpty()){
+        if(employee.getRejectedVacation() != null) {
             // The rejection reason is displayed
-            vacationRequestPending.setText("Status: " + employee.getMessage() + "\n" +"for " + employee.getRejectedVacation());
+            vacationRequestPending.setText(
+                    "Rejected: " + employee.getMessage()
+                            + "\n" + " for " + employee.getRejectedVacation()
+            );
+            employee.setRejectedVacation(null);
         }
+
+        // Display all the approved vacation for the Employee
+        for (int i = 0; i < employee.getAllVacations().size(); i++) {
+            allVacationsTextarea.appendText(
+                    (i + 1) + ": " + employee.getAllVacations().get(i) + "\n"
+            );
+        }
+        availableVacationDaysText.setText(String.valueOf(employee.getVacationDaysLeft()));
     }
 
     // Displays the current users email and password in the bottom left
@@ -131,6 +134,8 @@ public class employeeViewGUI extends mainGUI{
             // Everything gets reset
             vacationOptionMenuItem.setText("empty");
             vacationRequestPending.setText("Status: ");
+            vacationFromField.clear();
+            vacationUntilField.clear();
             dropdownVacations.setText("Requested Vacations");
         }
     }

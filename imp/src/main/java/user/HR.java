@@ -8,7 +8,7 @@ public class HR extends Employee{
         this.id = UserIDGenerator.getNextId("HR");
     }
 
-    public void createUser(UserAdministration ua){
+    public void createUser(){
 
     }
 
